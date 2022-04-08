@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 13:51:08 by cdiks             #+#    #+#             */
-/*   Updated: 2022/03/24 11:45:32 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:02:03 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "so_long.h"
 
-void	check_map(t_map **map)
+void	check_map(t_map **map, char **argv)
 {	
 	check_letters(map);
 	check_wall(map);
@@ -46,7 +46,7 @@ void	check_letters(t_map **map)
 			p++;
 		temp = temp->next;
 	}
-	if (c >= 1 && e >= 1 && p >= 1)
+	if (c >= 1 && e == 1 && p == 1)
 		return ;
 	ft_putstr_fd("Invalid map\n", 1);
 	exit(1);

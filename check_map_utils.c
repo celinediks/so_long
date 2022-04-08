@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:56:11 by cdiks             #+#    #+#             */
-/*   Updated: 2022/03/24 11:44:33 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:01:52 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	check_hor_lines(t_map **map)
 	return ;
 }
 
-// void	check_valid_file(char **argv)
+// void	check_valid_file(char *argv)
 // {
 // 	while (*argv)
 // 	{
-// 		if (ft_strnstr(*argv, ".ber", ft_strlen(*argv) + 1) == 1)
+// 		if (ft_strnstr(argv, ".ber", ft_strlen(argv) + 1) == 1)
 // 		{
 // 			ft_putstr_fd("Invalid map\n", 1);
 // 			exit(1);

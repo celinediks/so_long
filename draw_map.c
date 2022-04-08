@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 13:47:58 by cdiks             #+#    #+#             */
-/*   Updated: 2022/03/28 13:39:18 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/08 11:51:28 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,28 @@
 #include <stdio.h>
 #include "so_long.h"
 
-void	draw_map(t_data *data, t_map *map, t_xpm *xpm)
+void	draw_map(t_xpm *xpm)
 {
 	t_map	*temp;
 
-	temp = map;
+	temp = xpm->map;
 	while (temp)
 	{
-		draw_tile(temp->x, temp->y, data, &xpm->floor.mlx);
+		draw_tile(temp->x, temp->y, &xpm->data, &xpm->floor.mlx);
 		if (temp->data == WALL)
-			draw_tile(temp->x, temp->y, data, &xpm->wall.mlx);
+			draw_tile(temp->x, temp->y, &xpm->data, &xpm->wall.mlx);
 		if (temp->data == COLLECT)
-			draw_tile(temp->x, temp->y, data, &xpm->collectible.mlx);
-		else if (temp->data == EXIT)
-			draw_tile(temp->x, temp->y, data, &xpm->exit.mlx);
-		else if (temp->data == PLAYER)
-		{
-			draw_tile(temp->x, temp->y, data, &xpm->player.mlx);
-			xpm->player.y = temp->y;
-			xpm->player.x = temp->x;
-		}
+			draw_tile(temp->x, temp->y, &xpm->data, &xpm->collectible.mlx);
+		if (temp->data == EXIT)
+			draw_tile(temp->x, temp->y, &xpm->data, &xpm->exit.mlx);
+		draw_tile(xpm->player.x, xpm->player.y, &xpm->data, &xpm->player.mlx);
 		temp = temp->next;
 	}
-	mlx_put_image_to_window(data->mlx, data->mlx_window, data->image, 0, 0);
+	mlx_put_image_to_window(xpm->data.mlx, xpm->data.mlx_window,
+		xpm->data.image, 0, 0);
 }
 
-void	draw_tile(int x, int y, t_data *data, t_data *xpm)
+void	draw_tile(int x, int y, t_data *data, t_data *item)
 {
 	int				row;
 	int				col;
@@ -51,11 +47,43 @@ void	draw_tile(int x, int y, t_data *data, t_data *xpm)
 		col = 0;
 		while (col < TILE_SIZE)
 		{
-			color = get_pixel_from_xpm(xpm, col, row);
+			color = get_pixel_from_xpm(item, col, row);
 			my_mlx_pixel_put(data, col + (x * TILE_SIZE),
 				row + (y * TILE_SIZE), color);
 			col++;
 		}
 		row++;
 	}
+}
+
+void	init_player(t_xpm *xpm)
+{
+	t_map	*temp;
+
+	temp = xpm->map;
+	while (temp)
+	{
+		if (temp->data == PLAYER)
+		{
+			xpm->player.y = temp->y;
+			xpm->player.x = temp->x;
+		}
+		temp = temp->next;
+	}
+}
+
+void	init_collectibles(t_xpm *xpm)
+{
+	int		c;
+	t_map	*temp;
+
+	c = 0;
+	temp = xpm->map;
+	while (temp)
+	{
+		if (temp->data == COLLECT)
+			c++;
+		temp = temp->next;
+	}
+	xpm->collectible.amount = c;
 }

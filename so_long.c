@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 10:48:47 by cdiks             #+#    #+#             */
-/*   Updated: 2022/03/28 13:23:48 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:00:28 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 #include "so_long.h"
 #include "mlx.h"
 
-t_data	initialize_game(t_map *map)
+void	initialize_game(t_xpm *xpm)
 {
-	t_data	data;
-
-	data.mlx = mlx_init();
-	data.mlx_window = mlx_new_window(data.mlx, length(map) * TILE_SIZE,
-			width(map) * TILE_SIZE, "so_long");
-	data.image = mlx_new_image(data.mlx, length(map) * TILE_SIZE,
-			width(map) * TILE_SIZE);
-	data.address = mlx_get_data_addr(data.image, &data.bits_per_pixel,
-			&data.line_length, &data.endian);
-	mlx_hook(data.mlx_window, 2, 0, close_window, &data);
-	mlx_key_hook(data.mlx_window, key_hook, &data);
-	return (data);
+	xpm->data.mlx = mlx_init();
+	xpm->data.mlx_window = mlx_new_window(xpm->data.mlx, length(xpm->map)
+			* TILE_SIZE,
+			width(xpm->map) * TILE_SIZE, "so_long");
+	xpm->data.image = mlx_new_image(xpm->data.mlx, length(xpm->map) * TILE_SIZE,
+			width(xpm->map) * TILE_SIZE);
+	xpm->data.address = mlx_get_data_addr(xpm->data.image,
+			&xpm->data.bits_per_pixel,
+			&xpm->data.line_length, &xpm->data.endian);
+	init_player(xpm);
+	mlx_hook(xpm->data.mlx_window, 2, 0, close_window, &xpm->data);
+	mlx_key_hook(xpm->data.mlx_window, key_hook, xpm);
+	mlx_hook(xpm->data.mlx_window, 17, (1L << 17), close_window, &xpm->data);
 }
 
 void	initialize_images(t_data *data, t_xpm *xpm)
@@ -48,7 +49,7 @@ void	initialize_images(t_data *data, t_xpm *xpm)
 			&width, &height);
 }
 
-void	get_addresses(t_data *data, t_xpm *xpm)
+void	get_addresses(t_xpm *xpm)
 {
 	xpm->floor.mlx.address = mlx_get_data_addr(xpm->floor.mlx.image,
 			&xpm->floor.mlx.bits_per_pixel, &xpm->floor.mlx.line_length,
@@ -70,18 +71,15 @@ void	get_addresses(t_data *data, t_xpm *xpm)
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
-	t_map	*map;
 	t_xpm	xpm;
 
 	if (argc != 2)
 		exit(1);
-	map = NULL;
-	read_map(&map, argv[1]);
-	check_map(&map);
-	data = initialize_game(map);
-	initialize_images(&data, &xpm);
-	get_addresses(&data, &xpm);
-	draw_map(&data, map, &xpm);
-	mlx_loop(data.mlx);
+	read_map(&xpm.map, argv[1]);
+	check_map(&xpm.map, argv[1]);
+	initialize_game(&xpm);
+	initialize_images(&xpm.data, &xpm);
+	get_addresses(&xpm);
+	draw_map(&xpm);
+	mlx_loop(xpm.data.mlx);
 }
