@@ -6,15 +6,13 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 13:51:08 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/08 14:02:03 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 11:04:53 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "so_long.h"
 
-void	check_map(t_map **map, char **argv)
+void	check_map(t_map **map, char *argv)
 {	
 	check_letters(map);
 	check_wall(map);
@@ -22,7 +20,7 @@ void	check_map(t_map **map, char **argv)
 	check_other_chars(map);
 	check_ver_lines(map);
 	check_hor_lines(map);
-	//check_valid_file(argv);
+	check_valid_file(argv);
 }
 
 void	check_letters(t_map **map)
@@ -48,7 +46,7 @@ void	check_letters(t_map **map)
 	}
 	if (c >= 1 && e == 1 && p == 1)
 		return ;
-	ft_putstr_fd("Invalid map\n", 1);
+	ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 	exit(1);
 }
 
@@ -62,13 +60,13 @@ void	check_wall(t_map **map)
 		if ((temp->y == 0 && temp->data != WALL)
 			|| (temp->x == 0 && temp->data != WALL))
 		{
-			ft_putstr_fd("Invalid map\n", 1);
+			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 			exit(1);
 		}
 		if (((temp->y == highest_y(*map) && temp->data != WALL))
 			|| ((temp->x == highest_x(*map)) && temp->data != WALL))
 		{
-			ft_putstr_fd("Invalid map\n", 1);
+			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 			exit(1);
 		}
 		temp = temp->next;
@@ -80,7 +78,7 @@ void	check_rectangle(t_map **map)
 {
 	if (highest_y(*map) >= highest_x(*map))
 	{
-		ft_putstr_fd("Invalid map\n", 1);
+		ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 		exit(1);
 	}
 	return ;
@@ -99,7 +97,7 @@ void	check_other_chars(t_map **map)
 			temp = temp->next;
 		else
 		{
-			ft_putstr_fd("Invalid map\n", 1);
+			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 			exit(1);
 		}	
 	}

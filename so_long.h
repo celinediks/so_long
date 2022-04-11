@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 10:48:42 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/08 14:01:56 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:34:39 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ typedef struct s_floor {
 }				t_floor;
 
 typedef struct s_collectible {
+	t_data		mlx[2];
 	int			amount;
-	t_data		mlx;
+	int			cur_img;
 }				t_collectible;
 
 typedef struct s_exit {
-	t_data		mlx;
+	t_data		mlx[2];
+	int			cur_img;
 }				t_exit;
 
 typedef struct s_xpm {
@@ -98,7 +100,7 @@ void			print_list(t_map *list);
 void			create_wall(t_data *data, t_map *map);
 void			draw_map(t_xpm *xpm);
 void			draw_tile(int x, int y, t_data *data, t_data *xpm);
-void			check_map(t_map **map, char **argv);
+void			check_map(t_map **map, char *argv);
 void			check_letters(t_map **map);
 void			check_other_chars(t_map **map);
 void			check_rectangle(t_map **map);
@@ -115,6 +117,10 @@ void			init_player(t_xpm *xpm);
 int				check_action(t_xpm *xpm, int i, int j);
 void			init_collectibles(t_xpm *xpm);
 void			print_moves(t_xpm *xpm);
-// void			check_valid_file(char *argv);
+int				exit_game(char *ptr);
+void			check_valid_file(char *argv);
+int				animate(t_xpm *xpm);
+void			animate_items(t_xpm *xpm);
+void			initialize_collectibles(t_xpm *xpm);
 
 #endif

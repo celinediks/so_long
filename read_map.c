@@ -6,14 +6,12 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:12:39 by cdiks             #+#    #+#             */
-/*   Updated: 2022/03/28 10:58:48 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 11:03:14 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include "so_long.h"	
+#include "so_long.h"
+#include <fcntl.h>	
 
 void	print_list(t_map *list)
 {
@@ -59,7 +57,10 @@ void	read_map(t_map **map, char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		exit(0);
+	{
+		ft_putstr_fd("\033[0;31mFile does not excist\033[0m\n", 1);
+		exit(1);
+	}
 	line = get_next_line(fd);
 	y = 0;
 	while (fd && line != '\0')

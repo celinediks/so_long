@@ -6,13 +6,12 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:56:11 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/08 14:01:52 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 10:59:57 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "so_long.h"
+#include <stdio.h>
 
 int	highest_y(t_map *map)
 {
@@ -55,7 +54,7 @@ void	check_ver_lines(t_map **map)
 	{
 		if ((temp->next->x == 0 && temp->x != highest_x(*map)))
 		{
-			ft_putstr_fd("Invalid map\n", 1);
+			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 			exit(1);
 		}
 		temp = temp->next;
@@ -72,7 +71,7 @@ void	check_hor_lines(t_map **map)
 	{
 		if (temp->next == NULL && temp->x != highest_x(*map))
 		{
-			ft_putstr_fd("Invalid map\n", 1);
+			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
 			exit(1);
 		}
 		temp = temp->next;
@@ -80,16 +79,23 @@ void	check_hor_lines(t_map **map)
 	return ;
 }
 
-// void	check_valid_file(char *argv)
-// {
-// 	while (*argv)
-// 	{
-// 		if (ft_strnstr(argv, ".ber", ft_strlen(argv) + 1) == 1)
-// 		{
-// 			ft_putstr_fd("Invalid map\n", 1);
-// 			exit(1);
-// 		}
-// 		argv++;
-// 	}
-// 	return ;
-// }
+void	check_valid_file(char *argv)
+{
+	char	*file;
+
+	file = ft_strnstr(argv, ".ber", ft_strlen(argv));
+	if (file)
+	{
+		if (ft_strlen(file) != 4)
+		{
+			ft_putstr_fd("\033[0;31mInvalid map, must end with .ber\033[0m\n", 1);
+			exit(1);
+		}
+	}
+	else if (!file)
+	{
+		ft_putstr_fd("\033[0;31mInvalid map, must end with .ber\033[0m\n", 1);
+		exit(1);
+	}
+	return ;
+}

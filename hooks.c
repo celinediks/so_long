@@ -6,25 +6,31 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:49:55 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/08 13:27:53 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 11:12:30 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "so_long.h"
-#include "./libft/libft.h"
-#include "mlx.h"
 
 int	close_window(int keycode, t_data *data)
 {
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(data->mlx, data->mlx_window);
-		ft_putstr_fd("End of game!\n", 1);
+		ft_putstr_fd("\033[0;34mGame has ended \033[0m\n", 1);
 		exit(1);
 	}
 	return (0);
+}
+
+int	exit_game(char *ptr)
+{
+	if (ptr)
+	{
+		ft_putstr_fd(ptr, 1);
+		exit(0);
+	}
+	exit(0);
 }
 
 int	check_action(t_xpm *xpm, int i, int j)
@@ -40,12 +46,14 @@ int	check_action(t_xpm *xpm, int i, int j)
 		{
 			if (temp->data == COLLECT)
 			{
+				ft_putstr_fd("\033[0;35m35% discount, yay!\033[0m\n", 1);
 				xpm->collectible.amount -= 1;
 				temp->data = EMPTY;
 			}
 			if (temp->data == EXIT && xpm->collectible.amount == 0)
 			{
-				ft_putstr_fd("Thanks for shopping at Albert Heijn!\n", 1);
+				ft_putstr_fd("\033[0;34mThanks for shopping at Albert Heijn! \
+					\033[0m\n", 1);
 				exit(1);
 			}
 			return (0);

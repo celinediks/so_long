@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 SOURCES = so_long.c hooks.c pixel_management.c read_map.c \
 gnl/get_next_line.c gnl/get_next_line_utils.c draw_map.c check_map.c \
-check_map_utils.c \
+check_map_utils.c animations.c \
 
 REG_OBJFILES = $(SOURCES:.c=.o)
 
@@ -28,7 +28,7 @@ $(LIBFT):
 	$(MAKE) -C ./libft
 
 $(MLX):
-	$(MAKE) -C ./mlx
+	@$(MAKE) -C ./mlx
 
 $(NAME): $(REG_OBJFILES) $(MLX) $(LIBFT)
 	$(CC) $(CFLAGS) $(REG_OBJFILES) $(LIBFT) $(MLX) -Lmlx -Lmlx -framework OpenGL -framework AppKit -o $(NAME)
@@ -42,7 +42,7 @@ clean:
 	@rm -f $(REG_OBJFILES)
 
 fclean: clean
-	@rm -f $(MLX)
+	 @rm -f $(MLX)
 	@rm -f $(LIBFT)
 	@rm -f $(NAME)
 	@echo "${GREEN}Everything clean!${NO_COLOR}"

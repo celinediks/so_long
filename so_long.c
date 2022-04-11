@@ -6,14 +6,11 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 10:48:47 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/08 14:00:28 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:32:11 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "so_long.h"
-#include "mlx.h"
 
 void	initialize_game(t_xpm *xpm)
 {
@@ -29,7 +26,9 @@ void	initialize_game(t_xpm *xpm)
 	init_player(xpm);
 	mlx_hook(xpm->data.mlx_window, 2, 0, close_window, &xpm->data);
 	mlx_key_hook(xpm->data.mlx_window, key_hook, xpm);
-	mlx_hook(xpm->data.mlx_window, 17, (1L << 17), close_window, &xpm->data);
+	mlx_hook(xpm->data.mlx_window, 17, (1L << 17), exit_game,
+		"\033[0;34mexit game\033[0m\n");
+	mlx_loop_hook(xpm->data.mlx, animate, xpm);
 }
 
 void	initialize_images(t_data *data, t_xpm *xpm)
@@ -43,10 +42,16 @@ void	initialize_images(t_data *data, t_xpm *xpm)
 			&width, &height);
 	xpm->player.mlx.image = mlx_xpm_file_to_image(data->mlx, "./xpm/basket.xpm",
 			&width, &height);
-	xpm->collectible.mlx.image = mlx_xpm_file_to_image(data->mlx,
+	xpm->collectible.cur_img = 0;
+	xpm->exit.cur_img = 0;
+	xpm->collectible.mlx[0].image = mlx_xpm_file_to_image(data->mlx,
 			"./xpm/discount.xpm", &width, &height);
-	xpm->exit.mlx.image = mlx_xpm_file_to_image(data->mlx, "./xpm/checkout.xpm",
-			&width, &height);
+	xpm->collectible.mlx[1].image = mlx_xpm_file_to_image(data->mlx,
+			"./xpm/discount1.xpm", &width, &height);
+	xpm->exit.mlx[0].image = mlx_xpm_file_to_image(data->mlx,
+			"./xpm/checkout.xpm", &width, &height);
+	xpm->exit.mlx[1].image = mlx_xpm_file_to_image(data->mlx,
+			"./xpm/checkout2.xpm", &width, &height);
 }
 
 void	get_addresses(t_xpm *xpm)
@@ -60,13 +65,13 @@ void	get_addresses(t_xpm *xpm)
 	xpm->player.mlx.address = mlx_get_data_addr(xpm->player.mlx.image,
 			&xpm->player.mlx.bits_per_pixel, &xpm->player.mlx.line_length,
 			&xpm->player.mlx.endian);
-	xpm->collectible.mlx.address = mlx_get_data_addr(xpm->collectible.mlx.image,
-			&xpm->collectible.mlx.bits_per_pixel,
-			&xpm->collectible.mlx.line_length,
-			&xpm->collectible.mlx.endian);
-	xpm->exit.mlx.address = mlx_get_data_addr(xpm->exit.mlx.image,
-			&xpm->exit.mlx.bits_per_pixel, &xpm->exit.mlx.line_length,
-			&xpm->exit.mlx.endian);
+	xpm->exit.mlx[0].address = mlx_get_data_addr(xpm->exit.mlx[0].image,
+			&xpm->exit.mlx[0].bits_per_pixel, &xpm->exit.mlx[0].line_length,
+			&xpm->exit.mlx[0].endian);
+	xpm->exit.mlx[1].address = mlx_get_data_addr(xpm->exit.mlx[1].image,
+			&xpm->exit.mlx[1].bits_per_pixel, &xpm->exit.mlx[1].line_length,
+			&xpm->exit.mlx[1].endian);
+	initialize_collectibles(xpm);
 }
 
 int	main(int argc, char **argv)
@@ -75,8 +80,9 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		exit(1);
-	read_map(&xpm.map, argv[1]);
-	check_map(&xpm.map, argv[1]);
+	argv++;
+	read_map(&xpm.map, *argv);
+	check_map(&xpm.map, *argv);
 	initialize_game(&xpm);
 	initialize_images(&xpm.data, &xpm);
 	get_addresses(&xpm);

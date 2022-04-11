@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:26:24 by cdiks             #+#    #+#             */
-/*   Updated: 2022/03/21 15:12:51 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 10:47:45 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strchr(char *s, int c);
 size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 int		ft_strncmp(char *s1, char *s2, size_t n);
-int		ft_strnstr(char *haystack, char *needle, size_t len);
+char	*ft_strnstr(char *haystack, char *needle, size_t len);
 char	*ft_strrchr(char *s, int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);

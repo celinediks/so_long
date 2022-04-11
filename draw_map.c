@@ -6,12 +6,10 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 13:47:58 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/08 11:51:28 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:32:55 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "so_long.h"
 
 void	draw_map(t_xpm *xpm)
@@ -25,9 +23,11 @@ void	draw_map(t_xpm *xpm)
 		if (temp->data == WALL)
 			draw_tile(temp->x, temp->y, &xpm->data, &xpm->wall.mlx);
 		if (temp->data == COLLECT)
-			draw_tile(temp->x, temp->y, &xpm->data, &xpm->collectible.mlx);
+			draw_tile(temp->x, temp->y, &xpm->data,
+				&xpm->collectible.mlx[xpm->collectible.cur_img]);
 		if (temp->data == EXIT)
-			draw_tile(temp->x, temp->y, &xpm->data, &xpm->exit.mlx);
+			draw_tile(temp->x, temp->y, &xpm->data,
+				&xpm->exit.mlx[xpm->exit.cur_img]);
 		draw_tile(xpm->player.x, xpm->player.y, &xpm->data, &xpm->player.mlx);
 		temp = temp->next;
 	}

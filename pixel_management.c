@@ -6,13 +6,11 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:49:19 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/07 13:39:54 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/11 10:01:36 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "so_long.h"
-#include "mlx.h"
 
 unsigned int	get_pixel_from_xpm(t_data *xpm, int x, int y)
 {
