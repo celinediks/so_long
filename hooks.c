@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:49:55 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/11 11:12:30 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/13 11:03:08 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,9 @@ int	close_window(int keycode, t_data *data)
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(data->mlx, data->mlx_window);
-		ft_putstr_fd("\033[0;34mGame has ended \033[0m\n", 1);
-		exit(1);
+		end_game("\033[0;34mGame has ended \033[0m\n");
 	}
 	return (0);
-}
-
-int	exit_game(char *ptr)
-{
-	if (ptr)
-	{
-		ft_putstr_fd(ptr, 1);
-		exit(0);
-	}
-	exit(0);
 }
 
 int	check_action(t_xpm *xpm, int i, int j)

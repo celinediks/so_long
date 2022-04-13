@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 10:48:47 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/11 15:32:11 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/13 11:07:32 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	initialize_game(t_xpm *xpm)
 	mlx_hook(xpm->data.mlx_window, 2, 0, close_window, &xpm->data);
 	mlx_key_hook(xpm->data.mlx_window, key_hook, xpm);
 	mlx_hook(xpm->data.mlx_window, 17, (1L << 17), exit_game,
-		"\033[0;34mexit game\033[0m\n");
+		"\033[0;34mGame has ended\033[0m\n");
 	mlx_loop_hook(xpm->data.mlx, animate, xpm);
 }
 
@@ -87,5 +87,6 @@ int	main(int argc, char **argv)
 	initialize_images(&xpm.data, &xpm);
 	get_addresses(&xpm);
 	draw_map(&xpm);
+	free_map(xpm.map);
 	mlx_loop(xpm.data.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:12:39 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/11 11:03:14 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/13 11:01:54 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,19 @@ void	add_to_list(t_map **head, char line, int x, int y)
 void	read_map(t_map **map, char *file)
 {
 	char	*line;
+	char	*temp;
 	int		fd;
 	int		x;
 	int		y;
 
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("\033[0;31mFile does not excist\033[0m\n", 1);
-		exit(1);
-	}
+	check_fd(fd);
 	line = get_next_line(fd);
 	y = 0;
 	while (fd && line != '\0')
 	{
 		x = 0;
+		temp = line;
 		while (*line && *line != '\n')
 		{
 			add_to_list(map, *line, x, y);
@@ -73,8 +71,10 @@ void	read_map(t_map **map, char *file)
 			x++;
 		}
 		y++;
+		free(temp);
 		line = get_next_line(fd);
 	}
+	free_and_close(fd, line);
 }
 
 int	length(t_map *map)

@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 SOURCES = so_long.c hooks.c pixel_management.c read_map.c \
 gnl/get_next_line.c gnl/get_next_line_utils.c draw_map.c check_map.c \
-check_map_utils.c animations.c \
+check_map_utils.c animations.c so_long_utils.c \
 
 REG_OBJFILES = $(SOURCES:.c=.o)
 

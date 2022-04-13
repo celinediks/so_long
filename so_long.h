@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 10:48:42 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/11 15:34:39 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/13 11:00:41 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,20 @@ void			check_ver_lines(t_map **map);
 void			check_hor_lines(t_map **map);
 void			initialize_images(t_data *data, t_xpm *xpm);
 void			get_addresses(t_xpm *xpm);
+int				exit_game(char *ptr);
 int				length(t_map *map);
 int				width(t_map *map);
 void			init_player(t_xpm *xpm);
 int				check_action(t_xpm *xpm, int i, int j);
 void			init_collectibles(t_xpm *xpm);
 void			print_moves(t_xpm *xpm);
-int				exit_game(char *ptr);
 void			check_valid_file(char *argv);
 int				animate(t_xpm *xpm);
 void			animate_items(t_xpm *xpm);
 void			initialize_collectibles(t_xpm *xpm);
+void			free_map(t_map *map);
+void			end_game(char *str);
+void			free_and_close(int fd, char *line);
+void			check_fd(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cdiks <cdiks@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 13:51:08 by cdiks             #+#    #+#             */
-/*   Updated: 2022/04/11 11:04:53 by cdiks            ###   ########.fr       */
+/*   Updated: 2022/04/13 10:54:58 by cdiks            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	check_letters(t_map **map)
 	}
 	if (c >= 1 && e == 1 && p == 1)
 		return ;
-	ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
-	exit(1);
+	end_game("\033[0;31mInvalid map\033[0m\n");
 }
 
 void	check_wall(t_map **map)
@@ -59,16 +58,10 @@ void	check_wall(t_map **map)
 	{
 		if ((temp->y == 0 && temp->data != WALL)
 			|| (temp->x == 0 && temp->data != WALL))
-		{
-			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
-			exit(1);
-		}
+			end_game("\033[0;31mInvalid map\033[0m\n");
 		if (((temp->y == highest_y(*map) && temp->data != WALL))
 			|| ((temp->x == highest_x(*map)) && temp->data != WALL))
-		{
-			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
-			exit(1);
-		}
+			end_game("\033[0;31mInvalid map\033[0m\n");
 		temp = temp->next;
 	}
 	return ;
@@ -77,10 +70,7 @@ void	check_wall(t_map **map)
 void	check_rectangle(t_map **map)
 {
 	if (highest_y(*map) >= highest_x(*map))
-	{
-		ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
-		exit(1);
-	}
+		end_game("\033[0;31mInvalid map\033[0m\n");
 	return ;
 }
 
@@ -96,10 +86,7 @@ void	check_other_chars(t_map **map)
 			|| temp->data == PLAYER)
 			temp = temp->next;
 		else
-		{
-			ft_putstr_fd("\033[0;31mInvalid map\033[0m\n", 1);
-			exit(1);
-		}	
+			end_game("\033[0;31mInvalid map\033[0m\n");
 	}
 	return ;
 }
